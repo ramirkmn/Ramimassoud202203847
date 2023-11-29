@@ -1,0 +1,25 @@
+import gnu.io.CommPortIdentifier;
+import gnu.io.SerialPort;
+import java.io.OutputStream;
+
+public class SerialCommunication {
+
+    public static void main(String[] args) {
+        try {
+            CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier("COM7");
+            SerialPort serialPort = (SerialPort) portIdentifier.open("SerialCommunication", 2000);
+
+            serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+
+            OutputStream outputStream = serialPort.getOutputStream();
+
+            Thread.sleep(2000);
+
+            while (true) {
+                outputStream.write('x');
+                Thread.sleep(1000);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }}
